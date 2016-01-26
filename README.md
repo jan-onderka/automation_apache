@@ -48,7 +48,7 @@ the version of Apache HTTP Server it currently runs with. Compile and
 load the modules again.
 The console should then look like this:
 
- <h1>Apache/2.4.12 (Unix) mod_cluster/1.3.1.Final</h1><h1>mod_cluster/1.3.1.Final</h1>
+    <h1>Apache/2.4.12 (Unix) mod_cluster/1.3.1.Final</h1><h1>mod_cluster/1.3.1.Final</h1>
 
 The Apache HTTP Server version must not be hardcoded, it must use the
 Apache core function that spits out the version string.
