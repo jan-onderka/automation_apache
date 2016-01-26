@@ -1,0 +1,2 @@
+dnf -y install httpd-2.4.12
+dnf info httpd | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}'
