@@ -142,6 +142,9 @@ tools or correcting simple installation path problems.
 
 
 [1] https://gist.github.com/Karm/85cf36a52a8c203accce
+
 [2] http://docs.jboss.org/mod_cluster/1.3.0/html_single/#SetHandlermod_cluster-manager
+
 [3] http://docs.jboss.org/mod_cluster/1.3.0/html_single
+
 [4] https://github.com/Karm/clusterbench/archive/simplified-and-pure.zip
