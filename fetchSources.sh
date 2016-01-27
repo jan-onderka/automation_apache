@@ -1,7 +1,7 @@
 #!/bin/bash
 [ "$(whoami)" != 'root' ] && ( echo you are using a non-privileged account; exit 1 )
 
-dnf -y install wget git curl
+dnf -y install wget git curl gcc
 
 #apache v2.4.12
 myAPP="httpd"
