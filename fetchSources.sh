@@ -1,7 +1,16 @@
 #!/bin/bash
 [ "$(whoami)" != 'root' ] && ( echo you are using a non-privileged account; exit 1 )
 
-dnf -y install wget git curl gcc
+#install all dependances 
+dnf -y install wget git curl gcc m4 perl autoconf automake libtool make patch python maven
+
+#disable seLinux
+echo 0 > /selinux/enforce
+#stoping firewall
+systemctl stop firewalld.service
+
+#removing all software i will install
+dnf -y remove httpd apr apr-util tomcat mod_cluster
 
 #apache v2.4.12
 myAPP="httpd"
@@ -29,8 +38,8 @@ else
     echo apr works
 fi
 
-#apr util 1.5.4
-myAPP="apr_util"
+#apr-util 1.5.4
+myAPP="apr-util"
 myVER="1.5.4"
 if [ "$(dnf info apr_util | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}')" != '1.5.4' ] ; then
     dnf -y install apr_util-1.5.4
