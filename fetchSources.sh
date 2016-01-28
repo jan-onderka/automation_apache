@@ -54,4 +54,7 @@ else
     echo apr util works
 fi
 
+#Tomcat
+wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.30/bin/apache-tomcat-8.0.30.zip
+
 exit 0
