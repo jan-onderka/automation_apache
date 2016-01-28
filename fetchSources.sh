@@ -5,16 +5,21 @@
 dnf -y install wget git curl gcc m4 perl autoconf automake libtool make patch python maven
 
 #disable seLinux
-echo 0 > /selinux/enforce
+#echo 0 > /selinux/enforce
 #stoping firewall
 systemctl stop firewalld.service
 
 #removing all software i will install
 dnf -y remove httpd apr apr-util tomcat mod_cluster
 
+cd ~
 #apache v2.4.12
 myAPP="httpd"
 myVER="2.4.12"
+wget http://archive.apache.org/dist/httpd/httpd-2.4.12.tar.gz
+tar xf httpd-2.4.12.tar.gz
+
+
 if [ "$(dnf info ${myAPP} | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}')" != '${myVER}' ] ; then
     #dnf -y install httpd-2.4.12
     wget http://archive.apache.org/dist/httpd/${myAPP}-${myVER}.tar.gz
