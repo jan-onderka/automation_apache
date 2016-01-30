@@ -54,6 +54,10 @@ cd ~/httpd-2.4.12
              --disable-proxy-balancer && 
 make &&
 make install
+# seting modules for apache
+cp ${APACHE-PREFIX}/conf/httpd.conf ${APACHE-PREFIX}/conf/httpd.conf_backup
+sed -i 's/#LoadModule proxy_module/LoadModule proxy_module/g;s/#LoadModule proxy_ajp_module/LoadModule proxy_ajp_module/g;s/#LoadModule slotmem_module/LoadModule slotmem_module/g;s/#LoadModule manager_module/LoadModule manager_module/g;s/#LoadModule proxy_cluster_module/LoadModule proxy_cluster_module/g;s/#LoadModule advertise_module/LoadModule advertise_module/g' ${APACHE-PREFIX}/conf/httpd.conf
+
 
 #mod_cluster
 cd ~
