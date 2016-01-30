@@ -27,7 +27,19 @@ mv apr-util-1.5.4 httpd-2.4.12/srclib/apr-util
 wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 tar xf pcre-8.38.tar.gz
 cd pcre-8.38
-
+./configure --prefix=/usr                     \
+            --docdir=/usr/share/doc/pcre-8.38 \
+            --enable-unicode-properties       \
+            --enable-pcre16                   \
+            --enable-pcre32                   \
+            --enable-pcregrep-libz            \
+            --enable-pcregrep-libbz2          \
+            --enable-pcretest-libreadline     \
+            --disable-static                 &&
+make
+make install                     &&
+mv -v /usr/lib/libpcre.so.* /lib &&
+ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
 
 
 #compiling httpd
