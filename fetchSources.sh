@@ -18,7 +18,21 @@ myAPP="httpd"
 myVER="2.4.12"
 wget http://archive.apache.org/dist/httpd/httpd-2.4.12.tar.gz
 tar xf httpd-2.4.12.tar.gz
+wget https://archive.apache.org/dist/apr/apr-1.5.1.tar.gz
+tar xf apr-1.5.1.tar.gz
+mv apr-1.5.1 httpd-2.4.12/srclib/apr
+wget https://archive.apache.org/dist/apr/apr-util-1.5.4.tar.gz
+tar xf apr-util-1.5.4.tar.gz
+mv apr-util-1.5.4 httpd-2.4.12/srclib/apr-util
+wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
+tar xf pcre-8.38.tar.gz
+cd pcre-8.38
 
+
+
+#compiling httpd
+cd httpd-2.4.12
+./configure --with-included-apr --with-pcre
 
 if [ "$(dnf info ${myAPP} | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}')" != '${myVER}' ] ; then
     #dnf -y install httpd-2.4.12
@@ -49,7 +63,7 @@ myAPP="apr-util"
 myVER="1.5.4"
 if [ "$(dnf info apr_util | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}')" != '1.5.4' ] ; then
     dnf -y install apr_util-1.5.4
-    wget https://archive.apache.org/dist/apr/apr-util-1.5.1.tar.gz
+    wget https://archive.apache.org/dist/apr/apr-util-1.5.4.tar.gz
 else 
     echo apr util works
 fi
