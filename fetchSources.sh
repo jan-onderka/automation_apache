@@ -51,6 +51,7 @@ cd ~/httpd-2.4.12
              --enable-proxy \
              --enable-proxy-http \
              --enable-proxy-ajp \
+             --enable-so \
              --disable-proxy-balancer && 
 make &&
 make install
@@ -62,14 +63,19 @@ sed -i 's/#LoadModule proxy_module/LoadModule proxy_module/g;s/#LoadModule proxy
 #mod_cluster
 cd ~
 git clone https://github.com/modcluster/mod_cluster.git
-wget http://downloads.jboss.org/mod_cluster//1.3.1.Final/linux-i686/mod_cluster-1.3.1.Final-linux2-x86-so.tar.gz
-cd mod_cluster
 
 #Compile proxy_cluster
-cd ../mod_proxy_cluster
-./buildconf; ./configure --with-apxs=/usr/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
-echo "LoadModule proxy_cluster_module /usr/lib/apache2/modules/mod_proxy_cluster.so" >> /etc/apache2/mods-available/proxy_cluster.load
-
+cd ~/mod_cluster/native/mod_proxy_cluster
+./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
+#compile  advertise
+cd ~/mod_cluster/native/advertise
+./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
+#compile mod_manager
+cd ~/mod_cluster/native/mod_manager
+./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
+#compile mod_slotmem
+cd ~/mod_cluster/native/mod_slotmem
+./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
 
 
 
