@@ -74,7 +74,7 @@ cd ~/mod_cluster/native/advertise
 cd ~/mod_cluster/native/mod_manager
 ./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
 #compile mod_slotmem
-cd ~/mod_cluster/native/mod_slotmem
+cd ~/mod_cluster/native/mod_cluster_slotmem
 ./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
 
 
