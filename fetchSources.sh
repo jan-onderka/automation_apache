@@ -62,6 +62,7 @@ sed -i 's/#LoadModule proxy_module/LoadModule proxy_module/g;s/#LoadModule proxy
 #mod_cluster
 cd ~
 git clone https://github.com/modcluster/mod_cluster.git
+wget http://downloads.jboss.org/mod_cluster//1.3.1.Final/linux-i686/mod_cluster-1.3.1.Final-linux2-x86-so.tar.gz
 cd mod_cluster
 
 #Compile proxy_cluster
