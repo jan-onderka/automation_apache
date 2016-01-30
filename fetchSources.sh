@@ -59,17 +59,10 @@ make install
 cd ~
 git clone https://github.com/modcluster/mod_cluster.git
 cd mod_cluster
-#compile advertise
-cd native/advertise
-./buildconf; ./configure --with-apxs=/usr/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
-echo "LoadModule advertise_module /usr/lib/apache2/modules/mod_advertise.so" >> /etc/apache2/mods-available/proxy_cluster.load
-#Compile manager
-cd ../mod_manager
-./buildconf; ./configure --with-apxs=/usr/bin/apxs; make; cp *.so /usr/lib/apache2/modules/
-echo "LoadModule manager_module /usr/lib/apache2/modules/mod_manager.so" >> /etc/apache2/mods-available/proxy_cluster.load
+
 #Compile proxy_cluster
 cd ../mod_proxy_cluster
-./buildconf; ./configure --with-apxs=/usr/bin/apxs; make; cp *.so /usr/lib/apache2/modules/
+./buildconf; ./configure --with-apxs=/usr/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
 echo "LoadModule proxy_cluster_module /usr/lib/apache2/modules/mod_proxy_cluster.so" >> /etc/apache2/mods-available/proxy_cluster.load
 
 
