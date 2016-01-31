@@ -62,7 +62,7 @@ echo "./configure --with-included-apr --prefix=${ApachePrefix} \
              --enable-proxy-ajp \
              --enable-so \
 "
-sleep 10
+sleep 5
 ./configure --with-included-apr --prefix=${ApachePrefix} \
              --with-mpm=worker \
              --enable-mods-shared=most \
@@ -140,10 +140,10 @@ cp ~/mod_cluster/container/tomcat8/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/jboss-logging/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 
 #setup Tomcat
-myip=$(ifconfig end0s3 | sed -n '/enp0s3/,/netmask/p' | grep inet | awk '{print $2}')
+myip=$(ifconfig eth0 | sed -n '/eth0/,/netmask/p' | grep inet | awk '{print $2}')
 sed -i 's/defaultHost="localhost"/defaultHost="localhost" jvmRoute="jvm1"/g' ~/apache-tomcat-8.0.30/conf/server.xml
 sed -i 's/localhost/${myip}/g' ~/apache-tomcat-8.0.30/conf/server.xml
-
+sed -i 's|VersionLoggerListener" \/>|VersionLoggerListener" \/><Listener className="org.jboss.modcluster.container.catalina.standalone.ModClusterListener" advertise="true" \/>|g' ~/apache-tomcat-8.0.30/conf/server.xml
 
 #starting tomcat server
 chmod a+x apache-tomcat-8.0.30/bin/*.sh
