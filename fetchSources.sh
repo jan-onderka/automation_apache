@@ -102,6 +102,10 @@ cd ~/jboss-logging
 mvn package -DskipTests
 
 #Tomcat
+cd ~
 wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.30/bin/apache-tomcat-8.0.30.zip
+unzip apache-tomcat-8.0.30.zip
+#cd apache-tomcat-8.0.30
+
 
 exit 0
