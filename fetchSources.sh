@@ -41,9 +41,9 @@ ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
 
 
 #compiling httpd
-APACHE-PREFIX="/opt/DU/httpd-build"
+ApachePrefix="/opt/DU/httpd-build/"
 cd ~/httpd-2.4.12
-echo "./configure --with-included-apr --prefix=${APACHE-PREFIX} \ 
+echo "./configure --with-included-apr --prefix=${ApachePrefix} \ 
              --with-mpm=worker \
              --enable-mods-shared=most \
              --enable-maintainer-mode \
@@ -53,7 +53,7 @@ echo "./configure --with-included-apr --prefix=${APACHE-PREFIX} \
              --enable-proxy-ajp \
              --enable-so \
 "
-./configure --with-included-apr --prefix=${APACHE-PREFIX} \
+./configure --with-included-apr --prefix=${ApachePrefix} \
              --with-mpm=worker \
              --enable-mods-shared=most \
              --enable-maintainer-mode \
@@ -72,25 +72,25 @@ git clone https://github.com/modcluster/mod_cluster.git
 
 #Compile proxy_cluster
 cd ~/mod_cluster/native/mod_proxy_cluster
-./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
 #compile  advertise
 cd ~/mod_cluster/native/advertise
-./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
 #compile mod_manager
 cd ~/mod_cluster/native/mod_manager
-./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
 #compile mod_slotmem
 cd ~/mod_cluster/native/mod_cluster_slotmem
-./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
 
 #mod_cluster config file
 cd ~
 git clone https://gist.github.com/Karm/85cf36a52a8c203accce
-cp ${APACHE-PREFIX}/conf/extra/httpd.conf ${APACHE-PREFIX}/conf/extra/httpd.conf_backup
-cat 85cf36a52a8c203accce/mod_cluster.conf >> ${APACHE-PREFIX}/conf/extra/httpd.conf
+cp ${ApachePrefix}/conf/extra/httpd.conf ${ApachePrefix}/conf/extra/httpd.conf_backup
+cat 85cf36a52a8c203accce/mod_cluster.conf >> ${ApachePrefix}/conf/extra/httpd.conf
 
 #test if all works
-${APACHE-PREFIX}/bin/apachctl start
+${ApachePrefix}/bin/apachctl start
 sleep 5
 curl localhost:6666/mcm |grep -i -n '<h1>mod_cluster/1.3.2.Final</h1>'
 if [ $? -eq 0 ]; then echo "Mod_cluster is working, continue"; else echo "it is NOT working, exiting"; exit 1; fi
