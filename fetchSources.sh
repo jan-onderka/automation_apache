@@ -160,10 +160,11 @@ if [ $? -eq 0 ]; then echo "Tomcat worker starts, continue"; else echo "Tomcat w
 cd
 wget https://github.com/Karm/clusterbench/archive/simplified-and-pure.zip
 unzip simplified-and-pure.zip
-cd simplified-and-pure
+cd ~/clusterbench-simplified-and-pure
 mvn package -DskipTests
-cp clusterbench-ee6-web/target/clusterbench.war ~/apache-tomcat-8.0.30/webapps/
-sleep 15
+sleep 1
+cp ~/clusterbench-simplified-and-pure/clusterbench-ee6-web/target/clusterbench.war ~/apache-tomcat-8.0.30/webapps/
+sleep 10
 curl localhost:6666/clusterbench/requestinfo | grep -i "JVM route: jvm1"
 if [ $? -eq 0 ]; then echo "Application is up and running, job is done"; else echo "something goes wrong at last step, exiting"; exit 1; fi
 
