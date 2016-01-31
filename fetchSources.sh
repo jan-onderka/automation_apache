@@ -85,7 +85,8 @@ cat 85cf36a52a8c203accce/mod_cluster.conf >> ${APACHE-PREFIX}/conf/extra/httpd.c
 
 #test if all works
 ${APACHE-PREFIX}/bin/apachctl start
-if $(curl localhost:6666/mcm |grep -i -n '<h1>mod_cluster/1.3.2.Final</h1>'); then echo "it is working, continue"; else echo "it is NOT working, exiting"; exit 1; fi
+curl localhost:6666/mcm |grep -i -n '<h1>mod_cluster/1.3.2.Final</h1>'
+if [ $? -ne 0 ]; then echo "it is working, continue"; else echo "it is NOT working, exiting"; exit 1; fi
 
 
 
