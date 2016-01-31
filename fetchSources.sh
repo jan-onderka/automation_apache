@@ -79,6 +79,8 @@ make install
 #mod_cluster
 cd ~
 git clone https://github.com/modcluster/mod_cluster.git
+cd mod_cluster
+git checkout 1.3.1.Final
 
 #Compile proxy_cluster
 cd ~/mod_cluster/native/mod_proxy_cluster
