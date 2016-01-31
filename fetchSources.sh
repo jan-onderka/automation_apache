@@ -101,7 +101,7 @@ cat 85cf36a52a8c203accce/mod_cluster.conf >> ${ApachePrefix}/conf/httpd.conf
 
 #test if all works
 echo "STARTING APACHE"
-${ApachePrefix}/bin/apachctl start
+${ApachePrefix}/bin/apachectl start
 sleep 5
 curl localhost:6666/mcm |grep -i -n '<h1>mod_cluster/1.3.2.Final</h1>'
 if [ $? -eq 0 ]; then echo "Mod_cluster is working, continue"; else echo "Mod_cluster is NOT working, exiting"; exit 1; fi
