@@ -110,6 +110,29 @@ cp ~/mod_cluster/container/catalina-standalone/target/*.jar ~/apache-tomcat-8.0.
 cp ~/mod_cluster/container/tomcat8/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/jboss-logging/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 
+#setup Tomcat
+myip=$(ifconfig eth0 | sed -n '/eht0/,/netmask/p' | grep inet | awk '{print $2}')
+sed -i 's/defaultHost="localhost"/defaultHost="localhost" jvmRoute="jvm1"/g' ~/apache-tomcat-8.0.30/conf/server.xml
+sed -i 's/localhost/${myip}/g' ~/apache-tomcat-8.0.30/conf/server.xml
+
+
+#starting tomcat server
+chmod a+x apache-tomcat-8.0.30/bin/*.sh
+sh apache-tomcat-8.0.30/bin/startup.sh
+if [ $? -eq 0 ]; then echo "Tomcat starts, continue"; else echo "Tomcat is NOT working, exiting"; exit 1; fi
+#testing tomcat
+sleep 15
+curl localhost:6666/mcm | grep -i -n '(ajp://'
+if [ $? -eq 0 ]; then echo "Tomcat worker starts, continue"; else echo "Tomcat worker is NOT working, exiting"; exit 1; fi
+
+#testing application
+cd
+wget https://github.com/Karm/clusterbench/archive/simplified-and-pure.zip
+unzip simplified-and-pure.zip
+cd simplified-and-pure
+
+
+
 
 
 exit 0
