@@ -109,3 +109,8 @@ unzip apache-tomcat-8.0.30.zip
 
 
 exit 0
+cp ~/mod_cluster/core/target/*.jar ~/apache-tomcat-8.0.30/lib/.
+cp ~/mod_cluster/container-spi/target/*.jar ~/apache-tomcat-8.0.30/lib/.
+cp ~/mod_cluster/container/catalina/target/*.jar ~/apache-tomcat-8.0.30/lib/.
+cp ~/mod_cluster/container/catalina-standalone/target/*.jar ~/apache-tomcat-8.0.30/lib/.
+cp ~/mod_cluster/container/tomcat8/target/*.jar ~/apache-tomcat-8.0.30/lib/.
