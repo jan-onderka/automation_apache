@@ -77,6 +77,19 @@ cd ~/mod_cluster/native/mod_manager
 cd ~/mod_cluster/native/mod_cluster_slotmem
 ./buildconf; ./configure --with-apxs=${APACHE-PREFIX}/bin/apxs; make; cp *.so ${APACHE-PREFIX}/modules/
 
+#mod_cluster config file
+cd ${APACHE-PREFIX}/conf/extra/
+git clone https://gist.github.com/Karm/85cf36a52a8c203accce
+
+#adding mod_cluster to apache config
+echo "<Location /mod_cluster_manager>" >> httpd.conf
+echo "SetHandler mod_cluster-manager" >> httpd.conf
+echo "Order deny,allow" >> httpd.conf
+echo "Deny from all" >> httpd.conf
+echo "Allow from 127.0.0.1" >> httpd.conf
+echo "</Location>" >> httpd.conf
+
+
 
 
 
