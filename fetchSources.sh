@@ -43,7 +43,17 @@ ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
 #compiling httpd
 APACHE-PREFIX="/opt/DU/httpd-build"
 cd ~/httpd-2.4.12
-./configure --with-included-apr --prefix=${APACHE-PREFIX} 
+echo "./configure --with-included-apr --prefix=${APACHE-PREFIX} \ 
+             --with-mpm=worker \
+             --enable-mods-shared=most \
+             --enable-maintainer-mode \
+             --with-expat=builtin \
+             --enable-proxy \
+             --enable-proxy-http \
+             --enable-proxy-ajp \
+             --enable-so \
+"
+./configure --with-included-apr --prefix=${APACHE-PREFIX} \
              --with-mpm=worker \
              --enable-mods-shared=most \
              --enable-maintainer-mode \
