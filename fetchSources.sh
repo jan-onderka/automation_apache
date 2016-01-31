@@ -29,6 +29,14 @@ tar xf pcre-8.38.tar.gz
 
 #compiling pcre
 cd ~/pcre-8.38
+pwd
+echo "./configure --prefix=/usr                     \
+            --docdir=/usr/share/doc/pcre-8.38 \
+            --enable-unicode-properties       \
+            --enable-pcre16                   \
+            --enable-pcre32 && make ; make install   &&"
+sleep 5
+
 ./configure --prefix=/usr                     \
             --docdir=/usr/share/doc/pcre-8.38 \
             --enable-unicode-properties       \
@@ -43,6 +51,7 @@ ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
 #compiling httpd
 ApachePrefix="/opt/DU/httpd-build"
 cd ~/httpd-2.4.12
+pwd
 echo "./configure --with-included-apr --prefix=${ApachePrefix} \ 
              --with-mpm=worker \
              --enable-mods-shared=most \
@@ -53,6 +62,7 @@ echo "./configure --with-included-apr --prefix=${ApachePrefix} \
              --enable-proxy-ajp \
              --enable-so \
 "
+sleep 5
 ./configure --with-included-apr --prefix=${ApachePrefix} \
              --with-mpm=worker \
              --enable-mods-shared=most \
@@ -86,19 +96,22 @@ cd ~/mod_cluster/native/mod_cluster_slotmem
 #mod_cluster config file
 cd ~
 git clone https://gist.github.com/Karm/85cf36a52a8c203accce
-cp ${ApachePrefix}/conf/extra/httpd.conf ${ApachePrefix}/conf/extra/httpd.conf_backup
-cat 85cf36a52a8c203accce/mod_cluster.conf >> ${ApachePrefix}/conf/extra/httpd.conf
+cp ${ApachePrefix}/conf/httpd.conf ${ApachePrefix}/conf/httpd.conf_backup
+cat 85cf36a52a8c203accce/mod_cluster.conf >> ${ApachePrefix}/conf/httpd.conf
 
 #test if all works
+echo "STARTING APACHE"
 ${ApachePrefix}/bin/apachctl start
 sleep 5
 curl localhost:6666/mcm |grep -i -n '<h1>mod_cluster/1.3.2.Final</h1>'
-if [ $? -eq 0 ]; then echo "Mod_cluster is working, continue"; else echo "it is NOT working, exiting"; exit 1; fi
+if [ $? -eq 0 ]; then echo "Mod_cluster is working, continue"; else echo "Mod_cluster is NOT working, exiting"; exit 1; fi
 
 #ap_get_server_version()
 
 
 #building mod_cluster for Tomcat
+echo "Building mod_cluster with mvn"
+sleep 5
 cd ~/mod_cluster
 mvn package -DskipTests
 
@@ -106,6 +119,8 @@ mvn package -DskipTests
 cd ~
 git clone https://github.com/jboss-logging/jboss-logging.git
 cd ~/jboss-logging
+echo "building jboss-logging with mvn"
+sleep 5
 mvn package -DskipTests
 
 #Tomcat
@@ -122,13 +137,15 @@ cp ~/mod_cluster/container/tomcat8/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/jboss-logging/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 
 #setup Tomcat
-myip=$(ifconfig eth0 | sed -n '/eht0/,/netmask/p' | grep inet | awk '{print $2}')
+myip=$(ifconfig end0s3 | sed -n '/enp0s3/,/netmask/p' | grep inet | awk '{print $2}')
 sed -i 's/defaultHost="localhost"/defaultHost="localhost" jvmRoute="jvm1"/g' ~/apache-tomcat-8.0.30/conf/server.xml
 sed -i 's/localhost/${myip}/g' ~/apache-tomcat-8.0.30/conf/server.xml
 
 
 #starting tomcat server
 chmod a+x apache-tomcat-8.0.30/bin/*.sh
+echo "starting tomcat server"
+sleep 5
 sh apache-tomcat-8.0.30/bin/startup.sh
 if [ $? -eq 0 ]; then echo "Tomcat starts, continue"; else echo "Tomcat is NOT working, exiting"; exit 1; fi
 #testing tomcat
