@@ -81,6 +81,7 @@ cat 85cf36a52a8c203accce/mod_cluster.conf >> ${APACHE-PREFIX}/conf/extra/httpd.c
 
 #test if all works
 ${APACHE-PREFIX}/bin/apachctl start
+sleep 5
 curl localhost:6666/mcm |grep -i -n '<h1>mod_cluster/1.3.2.Final</h1>'
 if [ $? -eq 0 ]; then echo "Mod_cluster is working, continue"; else echo "it is NOT working, exiting"; exit 1; fi
 
@@ -132,7 +133,7 @@ unzip simplified-and-pure.zip
 cd simplified-and-pure
 mvn package -DskipTests
 cp clusterbench-ee6-web/target/clusterbench.war ~/apache-tomcat-8.0.30/webapps/
-sleep 5
+sleep 15
 curl localhost:6666/clusterbench/requestinfo | grep -i "JVM route: jvm1"
 if [ $? -eq 0 ]; then echo "Application is up and running, job is done"; else echo "something goes wrong at last step, exiting"; exit 1; fi
 
