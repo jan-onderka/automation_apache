@@ -86,43 +86,20 @@ cat 85cf36a52a8c203accce/mod_cluster.conf >> ${APACHE-PREFIX}/conf/extra/httpd.c
 #test if all works
 ${APACHE-PREFIX}/bin/apachctl start
 curl localhost:6666/mcm |grep -i -n '<h1>mod_cluster/1.3.2.Final</h1>'
-if [ $? -ne 0 ]; then echo "it is working, continue"; else echo "it is NOT working, exiting"; exit 1; fi
+if [ $? -eq 0 ]; then echo "Mod_cluster is working, continue"; else echo "it is NOT working, exiting"; exit 1; fi
+
+#ap_get_server_version()
 
 
+#building mod_cluster for Tomcat
+cd ~/mod_cluster
+mvn package -DskipTests
 
-if [ "$(dnf info ${myAPP} | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}')" != '${myVER}' ] ; then
-    #dnf -y install httpd-2.4.12
-    wget http://archive.apache.org/dist/httpd/${myAPP}-${myVER}.tar.gz
-    tar -xf ${myAPP}-${myVER}.tar.gz #ternarni operator or maybe if    ? : echo fail to unpack archive ${myAPP}-${myVER}; exit 1
-    if [ ! -d "${myAPP}-${myVER}" ] ; then
-        echo fail to unpack archive ${myAPP}-${myVER}
-        exit 1
-    else
-        #./${myAPP}-${myVER}/something....
-    fi
-else 
-    echo apache works
-fi
-
-#apr 1.5.1
-myAPP="apr"
-myVER="1.5.1"
-if [ "$(dnf info apr | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}')" != '1.5.1' ] ; then
-    dnf -y install apr-1.5.1
-    wget https://archive.apache.org/dist/apr/apr-1.5.1.tar.gz
-else 
-    echo apr works
-fi
-
-#apr-util 1.5.4
-myAPP="apr-util"
-myVER="1.5.4"
-if [ "$(dnf info apr_util | sed -n '/Instal/,/Description/p' | grep Version | awk '{print $3}')" != '1.5.4' ] ; then
-    dnf -y install apr_util-1.5.4
-    wget https://archive.apache.org/dist/apr/apr-util-1.5.4.tar.gz
-else 
-    echo apr util works
-fi
+#jboss-logging library
+cd ~
+git clone https://github.com/jboss-logging/jboss-logging.git
+cd ~/jboss-logging
+mvn package -DskipTests
 
 #Tomcat
 wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.30/bin/apache-tomcat-8.0.30.zip
