@@ -84,16 +84,16 @@ git checkout 1.3.1.Final .
 
 #Compile proxy_cluster
 cd ~/mod_cluster/native/mod_proxy_cluster
-./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; sleep 1; make; cp *.so ${ApachePrefix}/modules/
 #compile  advertise
 cd ~/mod_cluster/native/advertise
-./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; sleep 1; make; cp *.so ${ApachePrefix}/modules/
 #compile mod_manager
 cd ~/mod_cluster/native/mod_manager
-./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; sleep 1; make; cp *.so ${ApachePrefix}/modules/
 #compile mod_slotmem
 cd ~/mod_cluster/native/mod_cluster_slotmem
-./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; make; cp *.so ${ApachePrefix}/modules/
+./buildconf; ./configure --with-apxs=${ApachePrefix}/bin/apxs; sleep 1; make; cp *.so ${ApachePrefix}/modules/
 
 #mod_cluster config file
 cd ~
