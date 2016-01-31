@@ -41,7 +41,7 @@ ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
 
 
 #compiling httpd
-ApachePrefix="/opt/DU/httpd-build/"
+ApachePrefix="/opt/DU/httpd-build"
 cd ~/httpd-2.4.12
 echo "./configure --with-included-apr --prefix=${ApachePrefix} \ 
              --with-mpm=worker \
