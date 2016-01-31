@@ -55,10 +55,6 @@ cd ~/httpd-2.4.12
              --disable-proxy-balancer && 
 make &&
 make install
-# seting modules for apache
-cp ${APACHE-PREFIX}/conf/httpd.conf ${APACHE-PREFIX}/conf/httpd.conf_backup
-sed -i 's/#LoadModule proxy_module/LoadModule proxy_module/g;s/#LoadModule proxy_ajp_module/LoadModule proxy_ajp_module/g;s/#LoadModule slotmem_module/LoadModule slotmem_module/g;s/#LoadModule manager_module/LoadModule manager_module/g;s/#LoadModule proxy_cluster_module/LoadModule proxy_cluster_module/g;s/#LoadModule advertise_module/LoadModule advertise_module/g' ${APACHE-PREFIX}/conf/httpd.conf
-
 
 #mod_cluster
 cd ~
@@ -80,7 +76,7 @@ cd ~/mod_cluster/native/mod_cluster_slotmem
 #mod_cluster config file
 cd ~
 git clone https://gist.github.com/Karm/85cf36a52a8c203accce
-cp ${APACHE-PREFIX}/conf/extra/httpd.conf ${APACHE-PREFIX}/conf/extra/httpd.conf_backup2
+cp ${APACHE-PREFIX}/conf/extra/httpd.conf ${APACHE-PREFIX}/conf/extra/httpd.conf_backup
 cat 85cf36a52a8c203accce/mod_cluster.conf >> ${APACHE-PREFIX}/conf/extra/httpd.conf
 
 #test if all works
@@ -106,12 +102,15 @@ cd ~
 wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.30/bin/apache-tomcat-8.0.30.zip
 unzip apache-tomcat-8.0.30.zip
 #cd apache-tomcat-8.0.30
-
-
-exit 0
+#copiing libraries to Tomcat
 cp ~/mod_cluster/core/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/mod_cluster/container-spi/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/mod_cluster/container/catalina/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/mod_cluster/container/catalina-standalone/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/mod_cluster/container/tomcat8/target/*.jar ~/apache-tomcat-8.0.30/lib/.
 cp ~/jboss-logging/target/*.jar ~/apache-tomcat-8.0.30/lib/.
+
+
+
+exit 0
+
